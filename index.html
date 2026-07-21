@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Is It Tomorrow In China?</title>
+
+
+<style>
+
+body {
+
+    margin:0;
+    background:#000080;
+    color:white;
+    font-family:"Comic Sans MS","Courier New",cursive;
+    text-align:center;
+
+}
+
+
+.container {
+
+    width:90%;
+    max-width:800px;
+    margin:20px auto;
+    background:#ffffcc;
+    color:black;
+    border:10px ridge silver;
+    padding:20px;
+
+}
+
+
+h1 {
+
+    color:red;
+    font-size:48px;
+    text-shadow:3px 3px yellow;
+
+}
+
+
+.answer {
+
+    font-size:100px;
+    font-weight:bold;
+    animation:pulse .8s infinite;
+
+}
+
+
+.yes {
+
+    color:green;
+
+}
+
+
+.no {
+
+    color:red;
+
+}
+
+
+@keyframes pulse {
+
+    50% {
+        transform:scale(1.15);
+    }
+
+}
+
+
+.clock {
+
+    background:black;
+    color:#00ff00;
+    padding:10px;
+    margin:15px;
+    font-size:24px;
+
+}
+
+
+button {
+
+    font-size:22px;
+    padding:10px 20px;
+    margin:10px;
+    cursor:pointer;
+    border:5px outset gray;
+
+}
+
+
+.joke {
+
+    color:purple;
+    font-size:24px;
+    margin:20px;
+
+}
+
+
+.marquee {
+
+    background:red;
+    color:white;
+    font-size:22px;
+
+}
+
+
+.badge {
+
+    background:black;
+    color:white;
+    padding:10px;
+    display:inline-block;
+    border:3px solid white;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<audio id="music" loop>
+
+    <source src="music.mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+<div class="container">
+
+
+<img src="images/globe.gif" width="120">
+
+
+<h1>
+🇨🇳 IS IT TOMORROW IN CHINA? 🇨🇳
+</h1>
+
+
+
+<img src="images/dragon.gif" width="150">
+
+
+
+<div id="answer" class="answer">
+
+???
+
+</div>
+
+
+
+<div class="clock">
+
+YOUR TIME:
+
+<br>
+
+<span id="localTime"></span>
+
+</div>
+
+
+
+<div class="clock">
+
+CHINA TIME:
+
+<br>
+
+<span id="chinaTime"></span>
+
+</div>
+
+
+
+
+<div id="message">
+
+</div>
+
+
+
+
+<div class="joke" id="joke">
+
+</div>
+
+
+
+
+<button onclick="toggleMusic()">
+
+🎵 Music
+
+</button>
+
+
+
+<button onclick="location.reload()">
+
+🔄 Refresh Time Machine
+
+</button>
+
+
+
+
+<hr>
+
+
+
+Visitor #
+
+<span id="visitor"></span>
+
+
+
+
+<br><br>
+
+
+
+<div class="badge">
+
+✔ Best viewed in Internet Explorer
+
+<br>
+
+✔ Netscape Compatible
+
+<br>
+
+✔ Made with Notepad
+
+</div>
+
+
+
+
+<br><br>
+
+
+
+<img src="images/underconstruction.gif">
+
+
+
+<br><br>
+
+
+
+<div class="marquee">
+
+<marquee>
+
+BREAKING NEWS: China may already know tomorrow. No spoilers.
+
+</marquee>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+const music=document.getElementById("music");
+
+
+music.volume=.3;
+
+
+
+// Attempt autoplay
+
+window.onload=function(){
+
+    music.play().catch(()=>{
+
+        console.log("Autoplay blocked");
+
+    });
+
+};
+
+
+
+// Start music after first click
+
+document.addEventListener("click",()=>{
+
+    music.play();
+
+},{once:true});
+
+
+
+
+
+function toggleMusic(){
+
+
+    if(music.paused){
+
+        music.play();
+
+    }
+
+    else{
+
+        music.pause();
+
+    }
+
+
+}
+
+
+
+
+
+// Fake visitor counter
+
+let visitors=localStorage.getItem("visitors");
+
+
+if(!visitors){
+
+    visitors=1000000;
+
+}
+
+
+visitors++;
+
+
+localStorage.setItem(
+"visitors",
+visitors
+);
+
+
+document.getElementById("visitor").innerHTML=visitors;
+
+
+
+
+
+
+// Random jokes
+
+const jokes=[
+
+"China already knows what happens tomorrow.",
+
+"The future has been imported.",
+
+"Please do not ask China for lottery numbers.",
+
+"Time zones are suspicious.",
+
+"Tomorrow loaded successfully.",
+
+"Yesterday wants its calendar back."
+
+];
+
+
+
+document.getElementById("joke").innerHTML=
+
+jokes[Math.floor(Math.random()*jokes.length)];
+
+
+
+
+
+
+
+function update(){
+
+
+const now=new Date();
+
+
+
+const china=new Date(
+
+now.toLocaleString(
+
+"en-US",
+
+{
+
+timeZone:"Asia/Shanghai"
+
+}
+
+)
+
+);
+
+
+
+
+
+document.getElementById("localTime").innerHTML=
+
+now.toLocaleString();
+
+
+
+
+document.getElementById("chinaTime").innerHTML=
+
+china.toLocaleString();
+
+
+
+
+
+
+const localDay=new Date(
+
+now.getFullYear(),
+
+now.getMonth(),
+
+now.getDate()
+
+);
+
+
+
+
+const chinaDay=new Date(
+
+china.getFullYear(),
+
+china.getMonth(),
+
+china.getDate()
+
+);
+
+
+
+
+
+
+const answer=document.getElementById("answer");
+
+
+
+
+
+
+if(chinaDay > localDay){
+
+
+
+    answer.innerHTML="YES";
+
+
+    answer.className="answer yes";
+
+
+    document.getElementById("message").innerHTML=
+
+    "<h2>🎉 China is officially living in tomorrow.</h2>";
+
+
+
+}
+
+
+
+else{
+
+
+
+    answer.innerHTML="NOT YET";
+
+
+    answer.className="answer no";
+
+
+    document.getElementById("message").innerHTML=
+
+    "<h2>Everybody is still stuck in today.</h2>";
+
+
+
+}
+
+
+
+
+}
+
+
+
+
+update();
+
+
+
+setInterval(update,1000);
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
